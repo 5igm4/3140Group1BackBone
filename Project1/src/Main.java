@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 
 /**
@@ -22,10 +21,11 @@ public class Main{
         frame.add(gamePanel, BorderLayout.CENTER);
 
         frame.setSize(500, 500);
+        frame.setResizable(false);
         frame.setVisible(true);
         
         // the game starts when the gamepanel animation begins
-        
         gamePanel.go();
+
     }
 }

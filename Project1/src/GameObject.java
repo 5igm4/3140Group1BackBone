@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
  * Models an 'object' that is rendered in the game display.
@@ -25,15 +26,27 @@ public class GameObject {
 
 	/**
 	 * 
-	 * IMPLEMENT THIS! Should return true if object1 and object2 have collided.
+	 * CHANGED Returns true if object1 and object2 have collided.
 	 * 
 	 * @return The two objects have collided.
 	 */
 
-	public static boolean collide(GameObject object1, GameObject object2) {
-		return true;
+	public static boolean didCollide(GameObject object1, GameObject object2) {
+		Rectangle Obj1 = getObjRec(object1);
+		Rectangle Obj2 = getObjRec(object2);
+		if(Obj1.intersects(Obj2)){
+			return true;
+		}
+		return false;
 	}
-
+    
+	/**
+	 * 
+	 * @return The rectangle that encompass' the GameObject
+	 */
+	private static Rectangle getObjRec(GameObject obj) {
+        return new Rectangle(obj.topLeft.x, obj.topLeft.y, obj.bottomRight.x-obj.topLeft.x, obj.bottomRight.y-obj.topLeft.y);
+    }
 	/**
 	 * Initialize object with top and bottom corners and initial x- and y-speed
 	 * 
@@ -96,7 +109,10 @@ public class GameObject {
 	 */
 
 	public void accelX(int x) {
-		xSpeed += x;
+		if(xSpeed > 0)
+			xSpeed += x;
+		else 
+			xSpeed -= x;
 	}
 
 	/**
@@ -107,7 +123,10 @@ public class GameObject {
 	 */
 
 	public void accelY(int y) {
-		ySpeed += y;
+		if(ySpeed > 0)
+			ySpeed += y;
+		else 
+			ySpeed -= y;
 	}
 
 	/**
@@ -148,18 +167,77 @@ public class GameObject {
 	}
 
 	/**
-	 * Changes the location of the object for the next "animation frame"
+	 * Changes the location of the player object for the next "animation frame"
 	 * 
 	 */
 
-	public void step() {
-		topLeft.x += xSpeed;
-		bottomRight.x += xSpeed;
-
-		topLeft.y += ySpeed;
-		bottomRight.y += ySpeed;
+	public void move() {
+		if(GameController.upDirection == true){
+			topLeft.y -= ySpeed;
+			bottomRight.y -= ySpeed;
+		}
+		if(GameController.downDirection == true){
+			topLeft.y += ySpeed;
+			bottomRight.y += ySpeed;
+		}
+		if(GameController.rightDirection == true){
+			topLeft.x += xSpeed;
+			bottomRight.x += xSpeed;
+		}
+		if(GameController.leftDirection == true){
+			topLeft.x -= xSpeed;
+			bottomRight.x -= xSpeed;
+		}
+		shouldBounce(this, true);
 	}
+	public void step() {
+	topLeft.x += xSpeed;
+//	System.out.println("topLeftx" + topLeft.x);
+	bottomRight.x += xSpeed;
+//	System.out.println("bottomRightx" + bottomRight.x);
 
+	topLeft.y += ySpeed;
+//	System.out.println("topLefty" + topLeft.y);
+	bottomRight.y += ySpeed;
+//	System.out.println("bottomRighty" + bottomRight.y);
+	shouldBounce(this,false);
+	}
+	
+	/**
+	 * A function to check if the ball needs to bounce
+	 * and changes the ball's velocity appropriately
+	 * @param ball The GameObject that should be checked
+	 */
+	private void shouldBounce(GameObject ball, boolean isPlayer){
+		if(ball.getBottomRight().x >=  500) {
+			ball.bounce(true);
+			if(isPlayer == true)
+				ball.move();
+			else
+				ball.step();
+			}
+		if(ball.topLeft.x < -5) {
+			ball.bounce(true);
+			if(isPlayer == true)
+				ball.move();
+			else
+				ball.step();
+			}
+		if(ball.getBottomRight().y + (ball.getHeight()/2) >= 500) {
+			ball.bounce(false);
+			if(isPlayer == true)
+				ball.move();
+			else
+				ball.step();
+			}
+		if(ball.topLeft.y < -5) {
+			ball.bounce(false);
+			if(isPlayer == true)
+				ball.move();
+			else
+				ball.step();
+			}
+	}
 	/**
 	 * IMPLEMENT THIS: What should an object do if it reaches the boundary of
 	 * the game space?
@@ -168,6 +246,20 @@ public class GameObject {
 	 * should behave differently)
 	 */
 
-	public void bounce() {
+	public void bounce(boolean isX) {
+		if(isX == true){
+			this.xSpeed = -xSpeed;
+		} else {
+			this.ySpeed = -ySpeed;
+		}
+	}
+
+	public void speedup(int i) {
+		if(Math.abs(xSpeed) < 30 && Math.abs(ySpeed) < 30){
+			accelX(i);
+			System.out.println("XSpeed = " + xSpeed);
+			accelY(i);
+			System.out.println("YSpeed = " + ySpeed);
+		}
 	}
 }
