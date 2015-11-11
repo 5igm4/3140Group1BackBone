@@ -1,10 +1,15 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 
@@ -21,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	
    	static final int FRAME_RATE = 30; // animation proceeds at 30 frames per second
 	private int speedCounter = 0;
+    private int SCORE = 0;
 	Random random = new Random();
    	Timer t;	// animation timer
 	
@@ -32,6 +38,9 @@ public class GamePanel extends JPanel implements ActionListener {
 	 */
 	
 	GamePanel () {
+	    JLabel label1 = new JLabel("simple text");
+	    add(label1);
+	    label1.setBounds(5, 5, 20, 20);
 		addKeyListener(new GameController());
 		setFocusable(true);
 		setBackground(Color.WHITE);
@@ -51,7 +60,16 @@ public class GamePanel extends JPanel implements ActionListener {
 		g.setColor(Color.blue);
 		g.fillOval(ball.topLeft.x, ball.topLeft.y, ball.getWidth(), ball.getHeight());
 		g.fillOval(ball2.topLeft.x, ball2.topLeft.y, ball2.getWidth(), ball2.getHeight());
-
+        
+		drawScore(g);
+	}
+	
+	private void drawScore(Graphics g){
+		String drawScore;
+        g.setFont(new Font("Helvetica", Font.BOLD, 14));
+        g.setColor(Color.BLACK);
+		drawScore = "Score: " + SCORE;
+        g.drawString(drawScore, 500 / 2 + 112, 450 + 16);
 	}
 
 	/**
@@ -65,6 +83,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		if (e.getSource() == t) {
 			tick();
 			this.speedCounter++;
+			this.SCORE++;
 		}
 	}
 

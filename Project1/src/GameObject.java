@@ -239,11 +239,11 @@ public class GameObject {
 			}
 	}
 	/**
-	 * IMPLEMENT THIS: What should an object do if it reaches the boundary of
-	 * the game space?
-	 * 
-	 * (Of course, you can override this implementation if your subclasses
-	 * should behave differently)
+	 * CHANGED
+	 * Simply negates the axis that collided with the boundary
+	 * Only used to move the enemy objects, or end the game if
+	 * the object is the player object
+	 * @param isX if true negates the x-axis speed
 	 */
 
 	public void bounce(boolean isX) {
