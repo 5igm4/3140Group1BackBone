@@ -38,9 +38,6 @@ public class GamePanel extends JPanel implements ActionListener {
 	 */
 	
 	GamePanel () {
-	    JLabel label1 = new JLabel("simple text");
-	    add(label1);
-	    label1.setBounds(5, 5, 20, 20);
 		addKeyListener(new GameController());
 		setFocusable(true);
 		setBackground(Color.WHITE);
