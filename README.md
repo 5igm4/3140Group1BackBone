@@ -5,8 +5,11 @@ game over. The twist is, the player gets a random speed boost and must maintain 
 
 Controls:
 Up Arrow - Move up
+
 Down Arrow - Move down
+
 Right Arrow - Move Right
+
 Left Arrow - Move Left
 
 Works Cited:
