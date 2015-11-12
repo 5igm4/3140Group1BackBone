@@ -23,9 +23,9 @@ Tick was changed to check for collision and if the player object touches the bou
 Accel methods were changed to work with bouncing 
 
 Methods Added:
-Move was added to give the player object movement and it utilizes the keyboard listener
-Several draw functions were added to reduce the amount of lines needed to create objects/ print text
-shouldBounce was created to determine if the game object should bounce or not
-isGameOver checks if the game should end
-doGameOver actually ends the game
+Move was added to give the player object movement and it utilizes the keyboard listener.
+Several draw functions were added to reduce the amount of lines needed to create objects/ print text.
+shouldBounce was created to determine if the game object should bounce or not.
+isGameOver checks if the game should end.
+doGameOver actually ends the game.
 
