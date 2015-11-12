@@ -80,7 +80,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		if (e.getSource() == t) {
 			tick();
 			this.speedCounter++;
-			this.SCORE++;
+			this.SCORE += 2;
 		}
 	}
 
