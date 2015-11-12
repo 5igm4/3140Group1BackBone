@@ -25,6 +25,7 @@ public class Main{
 
 	
 private static void displayScreen() {
+
     JFrame frame = new JFrame("Let's Play...");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setLayout(new BorderLayout());
@@ -40,6 +41,9 @@ private static void displayScreen() {
     
     // the game starts when the gamepanel animation begins
     gamePanel.go();
+    
+    
+
 }
 
 }

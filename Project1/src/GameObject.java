@@ -23,11 +23,14 @@ public class GameObject {
 
 	protected int xSpeed;
 	protected int ySpeed;
+	
+	protected boolean bounced = false;
 
 	/**
 	 * 
 	 * CHANGED Returns true if object1 and object2 have collided.
-	 * 
+	 * @param object1 game object
+	 * @param object2 game object
 	 * @return The two objects have collided.
 	 */
 
@@ -41,7 +44,7 @@ public class GameObject {
 	}
     
 	/**
-	 * 
+	 * @param obj object we're getting the hit box for
 	 * @return The rectangle that encompass' the GameObject
 	 */
 	private static Rectangle getObjRec(GameObject obj) {
@@ -104,8 +107,7 @@ public class GameObject {
 	/**
 	 * Increase the GameObject's speed in the x dimension
 	 * 
-	 * @param x
-	 *            The amount of increase.
+	 * @param x The amount of increase.
 	 */
 
 	public void accelX(int x) {
@@ -167,29 +169,9 @@ public class GameObject {
 	}
 
 	/**
-	 * Changes the location of the player object for the next "animation frame"
+	 * Changes the location of the obstacle object for the next "animation frame"
 	 * 
 	 */
-
-	public void move() {
-		if(GameController.upDirection == true){
-			topLeft.y -= ySpeed;
-			bottomRight.y -= ySpeed;
-		}
-		if(GameController.downDirection == true){
-			topLeft.y += ySpeed;
-			bottomRight.y += ySpeed;
-		}
-		if(GameController.rightDirection == true){
-			topLeft.x += xSpeed;
-			bottomRight.x += xSpeed;
-		}
-		if(GameController.leftDirection == true){
-			topLeft.x -= xSpeed;
-			bottomRight.x -= xSpeed;
-		}
-		shouldBounce(this, true);
-	}
 	public void step() {
 	topLeft.x += xSpeed;
 //	System.out.println("topLeftx" + topLeft.x);
@@ -200,42 +182,49 @@ public class GameObject {
 //	System.out.println("topLefty" + topLeft.y);
 	bottomRight.y += ySpeed;
 //	System.out.println("bottomRighty" + bottomRight.y);
-	shouldBounce(this,false);
+	shouldBounce(this, false);
 	}
 	
 	/**
 	 * A function to check if the ball needs to bounce
 	 * and changes the ball's velocity appropriately
 	 * @param ball The GameObject that should be checked
+	 * @param isPlayer if the function is called on a player
+	 * then the game is over. we end the game by setting 'bounced' to
+	 * true, signaling the tick to end the game.
 	 */
-	private void shouldBounce(GameObject ball, boolean isPlayer){
+	protected void shouldBounce(GameObject ball, boolean isPlayer){
 		if(ball.getBottomRight().x >=  500) {
+			if(isPlayer == true) {
+				bounced = true;
+				return;
+			}
 			ball.bounce(true);
-			if(isPlayer == true)
-				ball.move();
-			else
-				ball.step();
+			ball.step();
 			}
 		if(ball.topLeft.x < -5) {
-			ball.bounce(true);
-			if(isPlayer == true)
-				ball.move();
-			else
-				ball.step();
+			if(isPlayer == true) {
+				bounced = true;
+				return;
 			}
-		if(ball.getBottomRight().y + (ball.getHeight()/2) >= 500) {
+			ball.bounce(true);
+			ball.step();
+			}
+		if(ball.getBottomRight().y + (ball.getHeight()/2) >= 490) {
+			if(isPlayer == true) {
+				bounced = true;
+				return;
+			}
 			ball.bounce(false);
-			if(isPlayer == true)
-				ball.move();
-			else
-				ball.step();
+			ball.step();
 			}
 		if(ball.topLeft.y < -5) {
+			if(isPlayer == true) {
+				bounced = true;
+				return;
+			}
 			ball.bounce(false);
-			if(isPlayer == true)
-				ball.move();
-			else
-				ball.step();
+			ball.step();
 			}
 	}
 	/**
@@ -246,20 +235,12 @@ public class GameObject {
 	 * @param isX if true negates the x-axis speed
 	 */
 
-	public void bounce(boolean isX) {
+	protected void bounce(boolean isX) {
 		if(isX == true){
 			this.xSpeed = -xSpeed;
 		} else {
 			this.ySpeed = -ySpeed;
 		}
 	}
-
-	public void speedup(int i) {
-		if(Math.abs(xSpeed) < 30 && Math.abs(ySpeed) < 30){
-			accelX(i);
-			System.out.println("XSpeed = " + xSpeed);
-			accelY(i);
-			System.out.println("YSpeed = " + ySpeed);
-		}
-	}
+	
 }

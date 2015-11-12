@@ -10,7 +10,7 @@ public class GameController extends KeyAdapter {
 		/**
 		 * Listener for keyboard input: affects the ball position
 		 * forcing the ball to move on either a horizontal or
-		 * vertical slope
+		 * vertical slope 
 		 */
         @Override
         public void keyPressed(KeyEvent e) {
@@ -22,7 +22,7 @@ public class GameController extends KeyAdapter {
                 upDirection = false;
                 downDirection = false;
                 rightDirection = false;
-                System.out.println("LEFT KEY");
+//                System.out.println("LEFT KEY");
             }
 
             if ((key == KeyEvent.VK_RIGHT) && (!rightDirection)) {
@@ -30,7 +30,7 @@ public class GameController extends KeyAdapter {
                 upDirection = false;
                 downDirection = false;
                 leftDirection = false;
-                System.out.println("Right KEY");
+//                System.out.println("Right KEY");
             }
 
             if ((key == KeyEvent.VK_UP) && (!upDirection)) {
@@ -38,7 +38,7 @@ public class GameController extends KeyAdapter {
                 rightDirection = false;
                 leftDirection = false;
                 downDirection = false;
-                System.out.println("Up KEY");
+//                System.out.println("Up KEY");
             }
 
             if ((key == KeyEvent.VK_DOWN) && (!downDirection)) {
@@ -46,7 +46,7 @@ public class GameController extends KeyAdapter {
                 rightDirection = false;
                 leftDirection = false;
                 upDirection = false;
-                System.out.println("Down KEY");
+//                System.out.println("Down KEY");
             }
         }
     }
