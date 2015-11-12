@@ -132,6 +132,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	 * between 1 and 5
 	 */
 	private void speedUp() {
+		//every 250 frames we speed up the player
 		if(speedCounter > 250) {
 			int randomInt = random.nextInt(5) + 1;
 			player.speedup(randomInt);
@@ -147,7 +148,8 @@ public class GamePanel extends JPanel implements ActionListener {
 		t.start();
 	}
 	/**
-	 * 
+	 * Move the obstacle objects and check if they collided with the player
+	 * if a collision occurred then the game is over
 	 * @param obstacleArr array of obstacle objects
 	 * @param player the player game object
 	 */
