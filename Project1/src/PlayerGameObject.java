@@ -47,16 +47,4 @@ public class PlayerGameObject extends GameObject{
 		return bounced;
 	}
 	
-	/**
-	 * 
-	 * @param i The amount by which you wish to increment the speed
-	 */
-	public void speedup(int i) {
-		if(Math.abs(xSpeed) < 30 && Math.abs(ySpeed) < 30){
-			accelX(i);
-//			System.out.println("XSpeed = " + xSpeed);
-			accelY(i);
-//			System.out.println("YSpeed = " + ySpeed);
-		}
-	}
 }

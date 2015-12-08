@@ -177,7 +177,6 @@ public class GameObject {
 //	System.out.println("topLeftx" + topLeft.x);
 	bottomRight.x += xSpeed;
 //	System.out.println("bottomRightx" + bottomRight.x);
-
 	topLeft.y += ySpeed;
 //	System.out.println("topLefty" + topLeft.y);
 	bottomRight.y += ySpeed;
@@ -200,6 +199,7 @@ public class GameObject {
 				return;
 			}
 			ball.bounce(true);
+			ball.bounce(false);
 			ball.step();
 			}
 		if(ball.topLeft.x < -5) {
@@ -216,6 +216,7 @@ public class GameObject {
 				return;
 			}
 			ball.bounce(false);
+			ball.bounce(true);
 			ball.step();
 			}
 		if(ball.topLeft.y < -5) {
@@ -242,5 +243,16 @@ public class GameObject {
 			this.ySpeed = -ySpeed;
 		}
 	}
-	
+	/**
+	 * 
+	 * @param i The amount by which you wish to increment the speed
+	 */
+	public void speedup(int i) {
+		if(Math.abs(xSpeed) < 30 && Math.abs(ySpeed) < 30){
+			accelX(i);
+//			System.out.println("XSpeed = " + xSpeed);
+			accelY(i);
+//			System.out.println("YSpeed = " + ySpeed);
+		}
+	}
 }

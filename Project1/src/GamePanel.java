@@ -28,11 +28,11 @@ public class GamePanel extends JPanel implements ActionListener {
     Random random = new Random();
    	Timer t;	// animation timer
    	JButton b3;
-	
+   	int randomInt = random.nextInt(7) + 1;
 	PlayerGameObject player; // bare-bones animation: just a simple object that slides across the panel
-	GameObject[] obstacleArr = {(new GameObject(0,250,35,35,5,4)),
-			   					(new GameObject(0,250,35,35,4,5)),
-			   					(new GameObject(0,250,35,35,6,4))};
+	GameObject[] obstacleArr = {(new GameObject(0,250,35,35,random.nextInt(7) + 1,random.nextInt(7) + 1)),
+			   					(new GameObject(239,300,35,35,random.nextInt(7) + 1,random.nextInt(7) + 1)),
+			   					(new GameObject(260,20,35,35,random.nextInt(7) + 1,random.nextInt(7) + 1))};
 	/**
 	 * Sets up panel background, creates game Timer, creates initial GameObjects
 	 * 
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		setFocusable(true);
 		setBackground(Color.WHITE);
         t = new Timer(1000/FRAME_RATE, this);	
-		player = new PlayerGameObject(250-35,250-35,35,35,3,3);
+		player = new PlayerGameObject(250-35,250-35,35,35,5,5);
 		
 	}
 	
@@ -117,7 +117,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	 */
 	
 	private void tick() {
-		speedUp();
+		speedUp(player);
 		if(player.move()) //move checks if the player bounces, which causes the game to end
 			doGameOver();
 		
@@ -131,11 +131,11 @@ public class GamePanel extends JPanel implements ActionListener {
 	 * The speed is calculated by choosing a random value
 	 * between 1 and 5
 	 */
-	private void speedUp() {
+	private void speedUp(GameObject object) {
 		//every 250 frames we speed up the player
 		if(speedCounter > 250) {
 			int randomInt = random.nextInt(5) + 1;
-			player.speedup(randomInt);
+			object.speedup(randomInt);
 			speedCounter = 0;
 		}
 	}
