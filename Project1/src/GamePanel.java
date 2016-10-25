@@ -23,7 +23,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
 	static final int FRAME_RATE = 30; // animation proceeds at 30 frames per
 										// second
-	private int speedCounter = 0;
 	private int SCORE = 0;
 	private boolean isGameOver = false;
 	Random random = new Random();
@@ -132,7 +131,6 @@ public class GamePanel extends JPanel implements ActionListener {
 		// animation
 		if (e.getSource() == t) {
 			tick();
-			this.speedCounter++;
 			this.SCORE += 2;
 		}
 	}
@@ -147,27 +145,15 @@ public class GamePanel extends JPanel implements ActionListener {
 			doGameOver(); // ends the game
 
 		isGameOver(obstacleArr, player);
-
-		speedUp(player);
+		
+		player.incSpeedCounter();
+		player.speedUp();
 
 		repaint();
 
 		// ask to have the game redrawn (this will invoke paintComponent()
 		// when the system says the time is right)
 
-	}
-
-	/**
-	 * Speeds up the player object in 500 frame intervals The speed is
-	 * calculated by choosing a random value between 1 and 5
-	 */
-	private void speedUp(GameObject object) {
-		// every 250 frames we speed up the player
-		if (speedCounter > 250) {
-			int randomInt = random.nextInt(5) + 1;
-			object.speedup(randomInt);
-			speedCounter = 0;
-		}
 	}
 
 	/**
@@ -194,6 +180,8 @@ public class GamePanel extends JPanel implements ActionListener {
 				System.out.println("Collision end");
 				doGameOver();
 			}
+			obj.incSpeedCounter();
+			obj.speedUp();
 			obj.step();
 			obj.shouldBounce(false);
 		}

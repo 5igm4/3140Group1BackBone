@@ -26,6 +26,7 @@ public class GameObject {
 	protected int ySpeed;
 
 	protected boolean bounced = false;
+	static int speedCounter = 0;
 
 	/**
 	 * 
@@ -185,11 +186,11 @@ public class GameObject {
 	 * 
 	 */
 	public void step() {
-
-		topLeft.x += xSpeed;
-		topLeft.y += ySpeed;
+		
 		bottomRight.y += ySpeed;
+		topLeft.x += xSpeed;
 		bottomRight.x += xSpeed;
+		topLeft.y += ySpeed;
 		// System.out.println("bottomRighty" + bottomRight.y);
 
 	}
@@ -206,7 +207,7 @@ public class GameObject {
 	 *            tick to end the game.
 	 */
 	protected void shouldBounce(boolean isPlayer) {
-		if (this.bottomRight.x  > 640 - this.getWidth()/4) {
+		if (this.topLeft.x + this.getWidth() * 1.2 > 640) {
 			if (isPlayer == true) {
 				bounced = true;
 				return;
@@ -215,7 +216,7 @@ public class GameObject {
 			//	this.bottomRight.x = 640 - this.getWidth()/2;
 			//	this.topLeft.x = 640 - this.getWidth()/2;
 			}
-		} else if (this.bottomRight.x < 0 + this.getWidth()) {
+		} else if (this.topLeft.x < 0) {
 			if (isPlayer == true) {
 				bounced = true;
 				return;
@@ -226,7 +227,7 @@ public class GameObject {
 			}
 		}
 
-		if (this.bottomRight.y > 480 - this.getHeight()) {
+		if (this.topLeft.y + getWidth() * 2 > 480 ) {
 			if (isPlayer == true) {
 				bounced = true;
 				return;
@@ -235,7 +236,7 @@ public class GameObject {
 				//this.bottomRight.y = 480 - this.getHeight()/2;
 				//this.topLeft.y = 480 - this.getHeight()/2;
 			}
-		} else if (this.bottomRight.y < 0 + this.getHeight()) {
+		} else if (this.topLeft.y < 0) {
 			if (isPlayer == true) {
 				bounced = true;
 				return;
@@ -275,5 +276,22 @@ public class GameObject {
 			accelY(i);
 			// System.out.println("YSpeed = " + ySpeed);
 		}
+	}
+	
+	/**
+	 * Speeds up the player object in 500 frame intervals The speed is
+	 * calculated by choosing a random value between 1 and 5
+	 */
+	protected void speedUp() {
+		// every 250 frames we speed up the player
+		if (speedCounter > 250) {
+			int randomInt = random.nextInt(5) + 1;
+			this.speedup(randomInt);
+			speedCounter = 0;
+		}
+	}
+	
+	public void incSpeedCounter() {
+		speedCounter++;
 	}
 }
