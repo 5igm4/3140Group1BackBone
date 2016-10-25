@@ -35,7 +35,7 @@ private static void displayScreen() {
     GamePanel gamePanel = new GamePanel();
     frame.add(gamePanel);
 
-    frame.setSize(500, 500);
+    frame.setSize(640, 480);
     frame.setResizable(false);
     frame.setVisible(true);
     

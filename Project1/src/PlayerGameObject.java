@@ -43,7 +43,7 @@ public class PlayerGameObject extends GameObject{
 			topLeft.x -= xSpeed;
 			bottomRight.x -= xSpeed;
 		}
-		shouldBounce(this, true);
+		shouldBounce(true);
 		return bounced;
 	}
 	
